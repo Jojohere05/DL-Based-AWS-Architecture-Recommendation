@@ -1,0 +1,498 @@
+text,labels,use_case
+Host a simple static website for CRM,"S3,CloudFront,IAM",static_website
+Build a serverless application for social media,"Lambda,API_Gateway,DynamoDB,IAM,S3,VPC",serverless
+Host a simple static website for CRM,"S3,CloudFront,IAM,API_Gateway",static_website
+Build a microservices API for inventory management with product catalog,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,S3",api_service
+Build a data pipeline to process images and store in image storage,"Lambda,S3,IAM,SQS",data_processing
+Develop a web platform for booking system with chat functionality,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Send push notifications to mobile users,"SNS,IAM",messaging
+Build a real-time messaging application,"API_Gateway,Lambda,DynamoDB,IAM,EBS",real_time_app
+Build a serverless API for e-commerce with product catalog,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Host a simple static website for inventory management,"S3,CloudFront,IAM,EC2",static_website
+Create a login system for students,"Lambda,IAM,DynamoDB,EC2",authentication_system
+Build a serverless web application with user login,"Lambda,API_Gateway,DynamoDB,Cognito,IAM,CloudFront",serverless
+Build a GraphQL API for CRM with transaction history,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,RDS",api_service
+Create a login system for customers,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a RESTful API for social media with user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,SNS",api_service
+Run scalable containerized API services,"ECS,API_Gateway,VPC,IAM",api_service
+Create a login system for customers,"Cognito,Lambda,IAM,DynamoDB,EBS",authentication_system
+Build a file conversion service for PDF to text,"S3,Lambda,IAM,SQS",file_processing
+Create a live updates system,"API_Gateway,Lambda,DynamoDB,IAM,EBS",real_time_app
+Create a React website that needs product catalog and fast page loads,"EC2,VPC,IAM,S3,RDS",web_application
+Build a file conversion service for video transcoding,"S3,Lambda,IAM,SQS",file_processing
+Process PDF files uploaded by users,"S3,Lambda,IAM,SQS,VPC",file_processing
+Create a Angular website that needs user data and fast page loads,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a user authentication system with SSO,"Cognito,Lambda,IAM,DynamoDB,SNS",authentication_system
+Build a real-time messaging application,"API_Gateway,Lambda,DynamoDB,IAM,CloudFront",real_time_app
+Build an analytics dashboard for website traffic,"S3,Lambda,RDS,IAM",analytics_platform
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB,EBS",authentication_system
+Create a RESTful API that handles notifications and stores data in product catalog,"API_Gateway,Lambda,IAM,DynamoDB,S3",api_service
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a backend for a mobile app that needs chat functionality,"API_Gateway,Lambda,DynamoDB,Cognito,IAM",mobile_backend
+Build a serverless API for social media with product catalog,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,ECS",api_service
+Develop a high-traffic API gateway for booking system,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,Cognito",api_service
+Create a login system for partners,"Cognito,Lambda,IAM,DynamoDB,CloudFront",authentication_system
+Create a RESTful API that handles tracking and stores data in user data,"API_Gateway,Lambda,IAM,CloudFront,ECS",api_service
+Build a data pipeline to process CSV files and store in image storage,"Lambda,S3,IAM,SQS",data_processing
+Build a real-time messaging application,"API_Gateway,Lambda,DynamoDB,IAM,EC2",real_time_app
+Build a medium web application with login system and document storage,"EC2,VPC,IAM,S3,RDS,CloudFront,DynamoDB",web_application
+Build a microservices API for social media with user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Create a Angular website that needs transaction history and fast page loads,"EC2,VPC,IAM,S3,RDS,CloudFront,DynamoDB",web_application
+Deploy a landing page with chat functionality,"S3,CloudFront,IAM,API_Gateway",static_website
+Build a serverless application for e-commerce,"Lambda,API_Gateway,DynamoDB,IAM,S3,ECS",serverless
+Process CSV files uploaded by users,"S3,Lambda,IAM,SQS,ECS",file_processing
+Create a medium mobile API with login system and push notifications,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a reporting system for user engagement,"S3,RDS,IAM",analytics_platform
+Create an event-driven system that sends notifications,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Develop a serverless API for analytics,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Store user data without provisioning servers,"DynamoDB,IAM",database
+Build a real-time social networking application,"API_Gateway,Lambda,DynamoDB,IAM,CloudFront",real_time_app
+Build a serverless application for social media,"Lambda,API_Gateway,IAM,S3",serverless
+Host a simple static website for inventory management,"S3,CloudFront,IAM",static_website
+Develop a mobile backend for fitness tracking with user data,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Develop a mobile backend for fitness tracking with transaction history,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Build a real-time fitness tracking application,"API_Gateway,Lambda,DynamoDB,IAM,SQS",real_time_app
+Create a login system for employees,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Host a simple static website for CRM,"S3,CloudFront,IAM",static_website
+Build a container-based analytics platform,"ECS,VPC,IAM,RDS,S3",web_application
+Build a medium web application with login system and media storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Attach SSD storage to application server,"EC2,EBS,VPC,IAM",web_application
+Process CSV files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Create a small mobile API with OAuth and SMS notifications,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Build a data pipeline to process videos and store in document storage,"Lambda,S3,IAM,SQS",data_processing
+Develop a small API gateway for inventory management,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,VPC",api_service
+Develop a streaming data platform for analytics,"Lambda,S3,IAM,SQS,CloudFront",data_processing
+Develop a streaming data platform for analytics,"Lambda,S3,IAM,SQS",data_processing
+Build a file conversion service for PDF to text,"S3,Lambda,IAM,SQS",file_processing
+Build an analytics dashboard for IoT sensors,"S3,Lambda,RDS,IAM",analytics_platform
+Process image files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a file conversion service for PDF to text,"S3,Lambda,IAM,SQS,EC2",file_processing
+Build a backend for a mobile app that needs file sharing,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Build a microservices API for booking system with product catalog,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Process Excel files uploaded by users,"S3,Lambda,IAM,SQS,Cognito",file_processing
+Process video files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a serverless application for CRM,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Develop a streaming data platform for ETL,"Lambda,S3,IAM,SQS,Cognito",data_processing
+Create an event-driven system that handles webhooks,"Lambda,API_Gateway,DynamoDB,IAM,S3,EC2",serverless
+Build a RESTful API for booking system with analytics data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build a serverless API for e-commerce with transaction history,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,ECS",api_service
+Build an analytics dashboard for IoT sensors,"S3,Lambda,RDS",analytics_platform
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a backend for a mobile app that needs file sharing,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,CloudFront",mobile_backend
+Host a simple static website for CRM,"S3,CloudFront,IAM",static_website
+Build a medium web application with login system and media storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a file conversion service for video transcoding,"S3,Lambda,IAM,SQS",file_processing
+Develop a mobile backend for e-commerce with analytics data,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Provision block storage for virtual machines,"EC2,EBS,VPC,IAM",web_application
+Create a login system for employees,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a RESTful API for inventory management with product catalog,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build an analytics dashboard for website traffic,"Lambda,RDS,IAM",analytics_platform
+Host a simple static website for social media,"S3,CloudFront,EBS",static_website
+Create a reporting system for system performance,"S3,Lambda,RDS,IAM,SQS",analytics_platform
+Develop a large-scale API gateway for CRM,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,ECS",api_service
+Build a large-scale web application with login system and media storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Host a simple static website for e-commerce,"S3,CloudFront,IAM,SQS",static_website
+Build a file conversion service for image resize,"S3,Lambda,IAM,SQS",file_processing
+Queue background jobs for processing,"SQS,IAM",messaging
+Process video files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a serverless application for CRM,"API_Gateway,DynamoDB,IAM,S3,EBS",serverless
+Develop a web platform for inventory management with payment processing,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Host multiple containerized applications,"ECS,VPC,IAM,RDS,CloudFront",web_application
+Build an analytics dashboard for user behavior,"S3,Lambda,RDS,IAM",analytics_platform
+Create a medium mobile API with social login and SMS notifications,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Develop a small API gateway for e-commerce,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build a file conversion service for video transcoding,"S3,Lambda,IAM,SQS",file_processing
+Deploy a landing page with payment processing,"S3,CloudFront,IAM",static_website
+Create a RESTful API that handles messaging and stores data in analytics data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,VPC",api_service
+Create an event-driven system that generates reports,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a documentation site,"S3,CloudFront,IAM",static_website
+Deploy a landing page with chat functionality,"S3,CloudFront,IAM",static_website
+Create a login system for customers,"Lambda,IAM,DynamoDB",authentication_system
+Build a medium web application with login system and file uploads,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a small web application with user authentication and file uploads,"EC2,VPC,IAM,S3,RDS,CloudFront,EBS",web_application
+Build a file conversion service for PDF to text,"S3,Lambda,IAM,SQS",file_processing
+Build a serverless application for e-commerce,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a serverless application for social media,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Mount persistent volumes for file system,"EC2,EBS,VPC,IAM",web_application
+Develop a streaming data platform for analytics,"Lambda,S3,IAM,SQS",data_processing
+Create a hourly batch processing system for booking system,"Lambda,S3,IAM,SQS,DynamoDB",data_processing
+Run containerized batch processing jobs,"ECS,S3,VPC,IAM,SQS",data_processing
+Develop a streaming data platform for analytics,"Lambda,S3,IAM,SQS",data_processing
+Deploy a landing page with chat functionality,"S3,CloudFront,IAM",static_website
+Build a user authentication system with social login,"Cognito,Lambda,IAM,DynamoDB,SQS",authentication_system
+Develop a web platform for e-commerce with payment processing,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Develop a web platform for booking system with chat functionality,"EC2,VPC,IAM,S3,RDS,CloudFront,SNS",web_application
+Host a simple static website for social media,"S3,CloudFront,IAM",static_website
+Develop a streaming data platform for IoT devices,"Lambda,IAM,SQS",data_processing
+Build a real-time messaging application,"API_Gateway,Lambda,DynamoDB,IAM,Cognito",real_time_app
+Build an analytics dashboard for IoT sensors,"S3,Lambda,RDS,IAM",analytics_platform
+Build a data pipeline to process videos and store in file uploads,"Lambda,S3,IAM,SQS",data_processing
+Develop a mobile backend for social networking with user data,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Develop a serverless API for machine learning,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Deploy microservices using Docker Compose,"ECS,VPC,IAM,DynamoDB,S3",web_application
+Develop a web platform for e-commerce with payment processing,"EC2,VPC,IAM,S3,RDS,CloudFront,API_Gateway",web_application
+Deploy a landing page with file sharing,"S3,CloudFront,IAM",static_website
+Build a microservices API for social media with transaction history,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM",analytics_platform
+Develop a web platform for CRM with chat functionality,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a real-time fitness tracking application,"API_Gateway,Lambda,IAM,VPC",real_time_app
+Build a real-time e-commerce application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build an analytics dashboard for sales data,"S3,Lambda,RDS,IAM",analytics_platform
+Build a real-time messaging application,"API_Gateway,Lambda,DynamoDB,IAM,VPC",real_time_app
+Create a Vue.js website that needs user data and edge caching,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create an event-driven system that sends notifications,"Lambda,API_Gateway,DynamoDB,IAM,S3,SQS",serverless
+Build a file conversion service for image resize,"S3,Lambda,IAM,SQS",file_processing
+Create a Angular website that needs user data and fast page loads,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create a batch batch processing system for booking system,"Lambda,S3,IAM,SQS,API_Gateway",data_processing
+Host a simple static website for e-commerce,"S3,CloudFront,IAM,RDS",static_website
+Create a login system for partners,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Host a simple static website for e-commerce,"S3,CloudFront,IAM",static_website
+Archive old documents and files,"S3,IAM",data_processing
+Create a login system for customers,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Create a RESTful API that handles notifications and stores data in transaction history,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,EBS",api_service
+Process CSV files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a small web application with user authentication and document storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a real-time fitness tracking application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a user authentication system with email/password,"Cognito,Lambda,IAM",authentication_system
+Create a login system for partners,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Deploy a landing page with real-time updates,"S3,CloudFront,IAM",static_website
+Create a RESTful API that handles updates and stores data in user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Send push notifications to users,"SNS,IAM",messaging
+Host a simple HTML/CSS/JS website,"S3,CloudFront,IAM",static_website
+Build a data pipeline to process logs and store in document storage,"Lambda,S3,IAM,SQS,Cognito",data_processing
+Process CSV files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Host a simple static website for inventory management,"S3,CloudFront,IAM",static_website
+Process video files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a file conversion service for image resize,"S3,Lambda,IAM,SQS",file_processing
+Develop a high-traffic API gateway for inventory management,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Create a reporting system for user engagement,"S3,Lambda,IAM",analytics_platform
+Create a RESTful API that handles messaging and stores data in user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,SQS",api_service
+Host a simple static website for e-commerce,"S3,CloudFront,IAM",static_website
+Build a microservices API for e-commerce with analytics data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build a user authentication system with email/password,"Cognito,Lambda,IAM,DynamoDB,API_Gateway",authentication_system
+Process PDF files uploaded by users,"S3,Lambda,IAM,SQS,ECS",file_processing
+Develop a serverless API for IoT devices,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build an analytics dashboard for IoT sensors,"S3,Lambda,RDS,IAM",analytics_platform
+Host a simple portfolio website,"S3,CloudFront,IAM",static_website
+Store JSON configuration files,"S3,IAM",storage
+Host a simple static website for inventory management,"S3,CloudFront,IAM",static_website
+Develop a streaming data platform for IoT devices,"Lambda,IAM,SQS,CloudFront",data_processing
+Create a RESTful API that handles messaging and stores data in analytics data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build a file conversion service for video transcoding,"S3,Lambda,IAM,SQS,VPC",file_processing
+Create a reporting system for revenue,"S3,Lambda,RDS,IAM",analytics_platform
+Build a traditional REST API on virtual machines,"EC2,VPC,IAM,RDS,API_Gateway",api_service
+Build a medium web application with OAuth and media storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Develop a mobile backend for e-commerce with product catalog,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Need block storage volumes for database server,"EC2,EBS,VPC,IAM,RDS",database
+Build a serverless application for e-commerce,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build a file conversion service for image resize,"S3,Lambda,IAM",file_processing
+Develop a streaming data platform for machine learning,"Lambda,S3,IAM,SQS,VPC",data_processing
+Build a RESTful API for CRM with transaction history,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,VPC",api_service
+Create a login system for partners,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a serverless application for e-commerce,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Host a simple static website for booking system,"S3,CloudFront,IAM",static_website
+Build a file conversion service for video transcoding,"S3,IAM,SQS",file_processing
+Process Excel files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Develop a streaming data platform for IoT devices,"Lambda,S3,IAM,SQS",data_processing
+Process streaming events in real-time,"Lambda,IAM,SQS",data_processing
+Build a microservices API for booking system with analytics data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Create a live updates system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Develop a serverless API for IoT devices,"Lambda,DynamoDB,IAM,S3",serverless
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB,VPC",authentication_system
+Serve static files for documentation,"S3,CloudFront,IAM",static_website
+Create a login system for employees,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a high-traffic web application with login system and document storage,"EC2,VPC,IAM,RDS,CloudFront,Cognito",web_application
+Deploy a landing page with real-time updates,"S3,CloudFront,IAM",static_website
+Deploy a landing page with payment processing,"S3,CloudFront,IAM",static_website
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Create a login system for employees,"Cognito,IAM,DynamoDB,EC2",authentication_system
+Build a user authentication system with multi-factor authentication,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Create a small mobile API with social login and SMS notifications,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Build an analytics dashboard for website traffic,"S3,Lambda,RDS,IAM,ECS",analytics_platform
+Process PDF files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a data pipeline to process sensor data and store in file uploads,"Lambda,S3,IAM,SQS,CloudFront",data_processing
+Build a real-time social networking application,"API_Gateway,Lambda,DynamoDB,IAM,ECS",real_time_app
+Build a backend for a mobile app that needs file sharing,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,ECS",mobile_backend
+Create a real-time batch processing system for booking system,"Lambda,S3,IAM,SQS",data_processing
+Host a simple static website for booking system,"S3,CloudFront,IAM",static_website
+Build a backend for a mobile app that needs chat functionality,"API_Gateway,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Build a serverless application for CRM,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a small mobile API with user authentication and push notifications,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,VPC",mobile_backend
+Deploy containerized microservices architecture,"ECS,VPC,IAM,DynamoDB",web_application
+Process PDF files uploaded by users,"Lambda,IAM,SQS",file_processing
+Build a serverless application for e-commerce,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM,API_Gateway",analytics_platform
+Deploy a landing page with chat functionality,"S3,CloudFront,IAM",static_website
+Create a reporting system for system performance,"S3,Lambda,RDS,IAM,EBS",analytics_platform
+Develop a mobile backend for fitness tracking with analytics data,"Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a reporting system for revenue,"S3,Lambda,RDS,IAM,SQS",analytics_platform
+Create an event-driven system that sends notifications,"Lambda,API_Gateway,DynamoDB,IAM,S3,Cognito",serverless
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM",analytics_platform
+Develop a serverless API for ETL,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Develop a large-scale API gateway for e-commerce,"API_Gateway,Lambda,IAM,DynamoDB,S3",api_service
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB,EC2",authentication_system
+Need high-performance disk storage for server,"EC2,EBS,VPC,IAM",compute
+Build an analytics dashboard for sales data,"S3,Lambda,RDS,IAM,EBS",analytics_platform
+Host Docker containers for data processing jobs,"ECS,VPC,IAM,S3",data_processing
+Develop a mobile backend for social networking with transaction history,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,CloudFront",mobile_backend
+Create a reporting system for system performance,"S3,Lambda,RDS,IAM,API_Gateway",analytics_platform
+Build a data pipeline to process videos and store in file uploads,"Lambda,S3,IAM,SQS",data_processing
+Develop a streaming data platform for IoT devices,"Lambda,S3,IAM",data_processing
+Create a React website that needs analytics data and edge caching,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB,VPC",authentication_system
+Host a simple static website for inventory management,"S3,CloudFront,IAM",static_website
+Build a user authentication system with multi-factor authentication,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM,ECS",real_time_app
+Create a live messaging system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a microservices API for CRM with analytics data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Develop a serverless API for ETL,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a live updates system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Create persistent storage for EC2 workloads,"EC2,EBS,VPC,IAM,S3",web_application
+Build a data pipeline to process videos and store in document storage,"Lambda,S3,IAM,SQS,VPC",data_processing
+Build a small web application with social login and document storage,"VPC,IAM,S3,RDS,CloudFront",web_application
+Build a real-time social networking application,"Lambda,DynamoDB,IAM,VPC",real_time_app
+Build a backend for a mobile app that needs payment processing,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Build an analytics dashboard for website traffic,"S3,Lambda,RDS,IAM,ECS",analytics_platform
+Create a RESTful API that handles notifications and stores data in user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Host a simple static website for inventory management,"S3,CloudFront,IAM",static_website
+Create a Vue.js website that needs transaction history and fast page loads,"EC2,VPC,IAM,S3,RDS",web_application
+Create a live notifications system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Implement user signup and login system,"Cognito,IAM",authentication_system
+Host a simple static website for social media,"S3,CloudFront,IAM",static_website
+Create a Angular website that needs user data and global content delivery,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Develop a streaming data platform for analytics,"Lambda,S3,IAM,SQS,ECS",data_processing
+Build a Kubernetes-based application with multiple services,"ECS,VPC,IAM,RDS,S3",web_application
+Add disk volumes to running instances,"EC2,EBS,VPC,IAM",compute
+Create a reporting system for revenue,"S3,Lambda,RDS,IAM",analytics_platform
+Develop a streaming data platform for IoT devices,"Lambda,S3,IAM,SQS,ECS",data_processing
+Create a RESTful API that handles notifications and stores data in user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build a serverless application for inventory management,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a real-time fitness tracking application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a file conversion service for video transcoding,"S3,Lambda,IAM,SQS",file_processing
+Create a real-time batch processing system for e-commerce,"Lambda,S3,SQS",data_processing
+Process Excel files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Create a daily batch processing system for e-commerce,"Lambda,S3,IAM,SQS",data_processing
+Build a high-traffic web application with OAuth and image storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a user authentication system with multi-factor authentication,"Lambda,IAM,DynamoDB",authentication_system
+Deploy a landing page with chat functionality,"S3,CloudFront,IAM,API_Gateway",static_website
+Create a daily batch processing system for booking system,"Lambda,S3,IAM,SQS,API_Gateway",data_processing
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM",analytics_platform
+Build a real-time e-commerce application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a serverless application for social media,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build container orchestration platform,"ECS,VPC,IAM,RDS",web_application
+Create a large-scale mobile API with login system and email alerts,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create an event-driven system that sends notifications,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Develop a web platform for e-commerce with file sharing,"EC2,VPC,IAM,S3,RDS,CloudFront,EBS",web_application
+Attach storage volumes to compute instances,"EC2,EBS,VPC,IAM",web_application
+Develop a large-scale API gateway for booking system,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Store backup files securely in cloud,"S3,IAM",data_processing
+Create a live updates system,"API_Gateway,DynamoDB,IAM",real_time_app
+Create a hourly batch processing system for CRM,"Lambda,S3,IAM,SQS,DynamoDB",data_processing
+Build a real-time social networking application,"Lambda,DynamoDB,IAM",real_time_app
+Build an analytics dashboard for sales data,"S3,Lambda,RDS,IAM",analytics_platform
+Create a RESTful API that handles messaging and stores data in user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Alert users about system events,"SNS,Lambda,IAM",messaging
+Create a login system for partners,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Deploy a landing page with payment processing,"S3,CloudFront,IAM",static_website
+Develop a web platform for social media with file sharing,"EC2,VPC,IAM,S3,RDS,CloudFront,EBS",web_application
+Create a small mobile API with user authentication and SMS notifications,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,VPC",mobile_backend
+Create a small mobile API with user authentication and SMS notifications,"Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Queue messages for processing later,"SQS,IAM",messaging
+Develop a streaming data platform for IoT devices,"Lambda,S3,IAM,SQS,ECS",data_processing
+Host a simple static website for e-commerce,"S3,CloudFront,IAM,ECS",static_website
+Build a user authentication system with social login,"Cognito,Lambda,IAM,DynamoDB,EBS",authentication_system
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM",analytics_platform
+Process image files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Develop a serverless API for analytics,"Lambda,DynamoDB,IAM,S3",serverless
+Create a live messaging system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Process Excel files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a backend for a mobile app that needs real-time updates,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Develop a streaming data platform for IoT devices,"Lambda,S3,IAM",data_processing
+Build a serverless application for e-commerce,"Lambda,API_Gateway,DynamoDB,IAM,S3,RDS",serverless
+Develop a serverless API for ETL,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build a serverless application for booking system,"API_Gateway,DynamoDB,IAM,S3,Cognito",serverless
+Deliver content globally with low latency,"CloudFront,S3,IAM",static_website
+Build a backend for a mobile app that needs chat functionality,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Develop a web platform for e-commerce with file sharing,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM",analytics_platform
+Create a Vue.js website that needs product catalog and edge caching,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a user authentication system with SSO,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a real-time social networking application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Develop a streaming data platform for IoT devices,"Lambda,S3,IAM,SQS",data_processing
+Build a backend for a mobile app that needs real-time updates,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a large-scale mobile API with login system and push notifications,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Deliver content globally with low latency,"CloudFront,S3,IAM",static_website
+Create a RESTful API that handles updates and stores data in product catalog,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build a microservices API for e-commerce with user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Deploy a static landing page,"S3,CloudFront,IAM",static_website
+Build a backend for a mobile app that needs real-time updates,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a login system for employees,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Develop a mobile backend for messaging with transaction history,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Deploy multiple Docker images for different services,"ECS,VPC,IAM,CloudFront",web_application
+Build a file conversion service for image resize,"S3,Lambda,IAM,SQS,API_Gateway",file_processing
+Build a serverless application for booking system,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build a data pipeline to process videos and store in document storage,"Lambda,S3,IAM,SQS",data_processing
+Build a file conversion service for PDF to text,"S3,Lambda,IAM,SQS",file_processing
+Create a reporting system for system performance,"S3,Lambda,RDS,IAM,VPC",analytics_platform
+Develop a streaming data platform for machine learning,"Lambda,S3,IAM,SQS",data_processing
+Deploy a landing page with file sharing,"S3,CloudFront,IAM",static_website
+Deploy a landing page with chat functionality,"S3,CloudFront,IAM",static_website
+Build a user authentication system with SSO,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Develop a streaming data platform for IoT devices,"Lambda,S3,IAM,SQS",data_processing
+Build a backend for a mobile app that needs real-time updates,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Develop a web platform for CRM with file sharing,"EC2,VPC,IAM,S3,RDS,CloudFront,SQS",web_application
+Upload and store media files,"S3,IAM",storage
+Create a live updates system,"API_Gateway,DynamoDB,IAM,ECS",real_time_app
+Develop a mobile backend for social networking with transaction history,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Build a real-time fitness tracking application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build an analytics dashboard for sales data,"S3,Lambda,RDS,IAM",analytics_platform
+Create a live notifications system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Create a Next.js website that needs transaction history and fast page loads,"EC2,VPC,IAM,S3,RDS,CloudFront,SNS",web_application
+Attach persistent disk storage to virtual machine,"EC2,EBS,VPC,IAM",web_application
+Create a live messaging system,"API_Gateway,Lambda,DynamoDB,IAM,Cognito",real_time_app
+Deploy a landing page with payment processing,"S3,CloudFront,IAM",static_website
+Build a high-traffic web application with user authentication and image storage,"EC2,VPC,IAM,S3,CloudFront",web_application
+Build a data pipeline to process CSV files and store in image storage,"Lambda,S3,IAM,SQS,ECS",data_processing
+Deploy a containerized microservices application,"ECS,VPC,IAM",web_application
+Develop a high-traffic API gateway for e-commerce,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Build an analytics dashboard for website traffic,"S3,Lambda,RDS,IAM,CloudFront",analytics_platform
+Develop a mobile backend for social networking with transaction history,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,EC2",mobile_backend
+Create a web API without managing servers,"Lambda,API_Gateway,IAM,DynamoDB",serverless
+Build an analytics dashboard for IoT sensors,"Lambda,RDS,IAM,SQS",analytics_platform
+Develop a large-scale API gateway for CRM,"Lambda,IAM,DynamoDB,CloudFront",api_service
+Build a user authentication system with email/password,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Develop a small API gateway for booking system,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Create a high-traffic mobile API with user authentication and push notifications,"API_Gateway,Lambda,DynamoDB,Cognito,IAM,SQS",mobile_backend
+Develop a streaming data platform for ETL,"Lambda,S3,IAM,SQS",data_processing
+Develop a small API gateway for CRM,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Add persistent disk space to EC2 instance,"EC2,EBS,VPC,IAM",web_application
+Build an analytics dashboard for sales data,"S3,Lambda,RDS,IAM,VPC",analytics_platform
+Build an analytics dashboard for sales data,"S3,Lambda,RDS,IAM,DynamoDB",analytics_platform
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM",analytics_platform
+Develop a streaming data platform for ETL,"Lambda,S3,IAM,SQS",data_processing
+Build an analytics dashboard for user behavior,"S3,Lambda,RDS,IAM",analytics_platform
+Create an event-driven system that handles webhooks,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build a backend for a mobile app that needs real-time updates,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a Vue.js website that needs user data and global content delivery,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM,Cognito",real_time_app
+Develop a web platform for social media with payment processing,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a user authentication system with SSO,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Develop a streaming data platform for analytics,"Lambda,S3,IAM,SQS,RDS",data_processing
+Create a RESTful API that handles tracking and stores data in transaction history,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Create a live messaging system,"API_Gateway,Lambda,DynamoDB,IAM,RDS",real_time_app
+Create a login system for employees,"Cognito,Lambda,IAM",authentication_system
+Build a backend for a mobile app that needs real-time updates,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Deploy a landing page with file sharing,"S3,CloudFront,IAM",static_website
+Create a reporting system for revenue,"S3,Lambda,RDS,IAM",analytics_platform
+Create a batch batch processing system for CRM,"Lambda,S3,SQS",data_processing
+Process video files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Create a daily batch processing system for e-commerce,"Lambda,S3,IAM,SQS",data_processing
+Deploy a landing page with payment processing,"S3,CloudFront,IAM",static_website
+Build a user authentication system with SSO,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Develop a web platform for e-commerce with file sharing,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Process Excel files uploaded by users,"S3,Lambda,IAM,SQS,Cognito",file_processing
+Build a real-time e-commerce application,"API_Gateway,DynamoDB,IAM",real_time_app
+Develop a mobile backend for social networking with analytics data,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,EBS",mobile_backend
+Develop a streaming data platform for machine learning,"Lambda,S3,IAM,SQS",data_processing
+Create a reporting system for system performance,"S3,Lambda,RDS,IAM",analytics_platform
+Create a live updates system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Build a large-scale web application with login system and file uploads,"EC2,VPC,IAM,S3,RDS,CloudFront,EBS",web_application
+Develop a large-scale API gateway for social media,"API_Gateway,Lambda,IAM,DynamoDB",api_service
+Build a user authentication system with multi-factor authentication,"Cognito,Lambda,DynamoDB",authentication_system
+Create a live messaging system,"API_Gateway,Lambda,DynamoDB,IAM,RDS",real_time_app
+Build a file conversion service for PDF to text,"Lambda,IAM,SQS",file_processing
+Process PDF files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Create a live notifications system,"API_Gateway,DynamoDB,IAM",real_time_app
+Build a backend for a mobile app that needs chat functionality,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Develop a serverless API for analytics,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build a file conversion service for video transcoding,"S3,Lambda,IAM,SQS",file_processing
+Build an analytics dashboard for sales data,"S3,Lambda,RDS,IAM",analytics_platform
+Deploy a basic landing page with no backend,"S3,CloudFront,IAM",static_website
+Build a backend for a mobile app that needs file sharing,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a login system for partners,"Cognito,Lambda,IAM,DynamoDB,CloudFront",authentication_system
+Build a data pipeline to process logs and store in file uploads,"Lambda,S3,IAM,SQS",data_processing
+Develop a serverless API for IoT devices,"Lambda,API_Gateway,DynamoDB,S3",serverless
+Create a Vue.js website that needs analytics data and global content delivery,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a serverless application for inventory management,"Lambda,API_Gateway,DynamoDB,IAM,S3,RDS",serverless
+Build an analytics dashboard for website traffic,"S3,Lambda,RDS,IAM",analytics_platform
+Create a large-scale mobile API with social login and push notifications,"API_Gateway,Lambda,Cognito,SNS,IAM",mobile_backend
+Build a medium web application with user authentication and document storage,"EC2,VPC,IAM,S3,RDS,CloudFront,Lambda",web_application
+Create a live messaging system,"API_Gateway,Lambda,DynamoDB,IAM,VPC",real_time_app
+Process Excel files uploaded by users,"S3,Lambda,SQS",file_processing
+Create an event-driven system that processes uploads,"Lambda,API_Gateway,DynamoDB,IAM,S3,EC2",serverless
+Create a large-scale mobile API with OAuth and email alerts,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a RESTful API that handles tracking and stores data in user data,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Create a Vue.js website that needs user data and edge caching,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create an event-driven system that processes uploads,"Lambda,DynamoDB,IAM,S3,RDS",serverless
+Build a real-time messaging application,"API_Gateway,Lambda,IAM,SNS",real_time_app
+Create a hourly batch processing system for booking system,"Lambda,S3,IAM,SQS",data_processing
+Build a file conversion service for video transcoding,"S3,Lambda,IAM,SQS,API_Gateway",file_processing
+Develop a small API gateway for CRM,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Develop a large-scale API gateway for booking system,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront,Cognito",api_service
+Archive old documents,"S3,IAM",data_processing
+Build a file conversion service for PDF to text,"S3,Lambda,IAM,VPC",file_processing
+Build an analytics dashboard for website traffic,"S3,Lambda,RDS,IAM",analytics_platform
+Build an analytics dashboard for website traffic,"S3,Lambda,RDS,IAM",analytics_platform
+Build a user authentication system with SSO,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Host a simple static website for e-commerce,"S3,CloudFront,IAM",static_website
+Build a small web application with OAuth and document storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Process Excel files uploaded by users,"S3,Lambda,IAM,SQS,EBS",file_processing
+Create a reporting system for system performance,"S3,Lambda,RDS,IAM",analytics_platform
+Create a reporting system for user engagement,"S3,Lambda,RDS,IAM,DynamoDB",analytics_platform
+Build a data pipeline to process images and store in file uploads,"Lambda,S3,IAM",data_processing
+Build a GraphQL API for social media with product catalog,"API_Gateway,Lambda,IAM,DynamoDB,CloudFront",api_service
+Process image files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Build a serverless application for CRM,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a Vue.js website that needs product catalog and edge caching,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create a login system for students,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Develop a streaming data platform for ETL,"Lambda,S3,IAM,SQS",data_processing
+Create an event-driven system that generates reports,"API_Gateway,DynamoDB,IAM,S3",serverless
+Develop a mobile backend for social networking with product catalog,"API_Gateway,Lambda,DynamoDB,SNS,IAM",mobile_backend
+Build a small web application with social login and media storage,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Process video files uploaded by users,"S3,Lambda,IAM,SQS",file_processing
+Develop a mobile backend for social networking with product catalog,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,RDS",mobile_backend
+Build a backend for a mobile app that needs file sharing,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,EC2",mobile_backend
+Create a login system for partners,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a medium web application with OAuth and media storage,"EC2,VPC,IAM,RDS,CloudFront",web_application
+Build a user authentication system with social login,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Create a live tracking system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Deploy a landing page with payment processing,"S3,CloudFront,IAM",static_website
+Build an analytics dashboard for user behavior,"S3,Lambda,RDS,IAM",analytics_platform
+Create a medium mobile API with login system and email alerts,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Create a Angular website that needs analytics data and global content delivery,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Build a real-time social networking application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Create a login system for employees,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a serverless application for e-commerce,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Build a backend for a mobile app that needs chat functionality,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM",mobile_backend
+Host a simple static website for booking system,"S3,CloudFront,IAM",static_website
+Deploy a landing page with file sharing,"S3,CloudFront,IAM,Lambda",static_website
+Run Docker containers for my web application,"ECS,VPC,IAM,RDS",web_application
+Build a real-time fitness tracking application,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Create an event-driven system that processes uploads,"Lambda,API_Gateway,DynamoDB,IAM,S3,SQS",serverless
+Host a simple static website for inventory management,"S3,CloudFront,IAM",static_website
+Develop a mobile backend for messaging with transaction history,"API_Gateway,Lambda,DynamoDB,Cognito,SNS,IAM,EBS",mobile_backend
+Deploy a landing page with chat functionality,"S3,CloudFront,IAM",static_website
+Develop a serverless API for IoT devices,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Deploy a landing page with real-time updates,"S3,CloudFront,SNS",static_website
+Host a simple static website for CRM,"S3,CloudFront,IAM",static_website
+Create a live messaging system,"API_Gateway,Lambda,DynamoDB,IAM",real_time_app
+Store backup files securely,"S3,IAM",data_processing
+Build a user authentication system with email/password,"Cognito,Lambda,IAM,DynamoDB,SNS",authentication_system
+Create an event-driven system that handles webhooks,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a login system for employees,"Cognito,Lambda,IAM,DynamoDB",authentication_system
+Build a serverless application for inventory management,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create a hourly batch processing system for booking system,"Lambda,S3,IAM,SQS",data_processing
+Process Excel files uploaded by users,"S3,Lambda,IAM,SQS,Cognito",file_processing
+Create a Angular website that needs analytics data and edge caching,"EC2,VPC,IAM,S3,RDS,CloudFront",web_application
+Create an event-driven system that generates reports,"Lambda,API_Gateway,DynamoDB,IAM,S3",serverless
+Create an event-driven system that generates reports,"Lambda,API_Gateway,DynamoDB,IAM,S3,VPC",serverless
+Create a RESTful API that handles notifications and stores data in user data,"API_Gateway,Lambda,DynamoDB,CloudFront",api_service
+Build an analytics dashboard for website traffic,"S3,RDS,IAM",analytics_platform
+Build an analytics dashboard for user behavior,"S3,Lambda,RDS,IAM,SNS",analytics_platform
+Deploy a landing page with file sharing,"S3,CloudFront,IAM",static_website
+Develop a mobile backend for messaging with transaction history,"API_Gateway,Lambda,DynamoDB,Cognito,IAM",mobile_backend

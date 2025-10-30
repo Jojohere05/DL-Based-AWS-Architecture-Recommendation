@@ -40,11 +40,7 @@ templates = {
         "Build a serverless application for {purpose}",
         "Create an event-driven system that {action}",
         "Develop a serverless API for {use_case}",
-    ]
-}
-
-# Additional specific templates
-additional_templates = {
+    ],
     "static_website": [
         "Host a simple static website for {purpose}",
         "Deploy a landing page with {features}",
@@ -66,9 +62,6 @@ additional_templates = {
         "Create a reporting system for {metrics}",
     ]
 }
-
-# Merge new templates
-templates.update(additional_templates)
 
 # Substitution options
 substitutions = {
@@ -113,56 +106,41 @@ use_case_labels = {
 def generate_example(use_case_type):
     """Generate one training example"""
     template = random.choice(templates[use_case_type])
-    
-    # Replace placeholders
     text = template
     for placeholder, options in substitutions.items():
         if f"{{{placeholder}}}" in text:
             text = text.replace(f"{{{placeholder}}}", random.choice(options))
-    
-    # Get base labels
     labels = use_case_labels.get(use_case_type, []).copy()
-    
-    # Add variations (sometimes add/remove services)
-    if random.random() > 0.7:  # 30% chance to add extra service
+    if random.random() > 0.7:
         extra_services = list(set(all_services) - set(labels))
         if extra_services:
             labels.append(random.choice(extra_services))
-    
-    if random.random() > 0.8 and len(labels) > 3:  # 20% chance to remove one
+    if random.random() > 0.8 and len(labels) > 3:
         labels.remove(random.choice(labels))
-    
     return {
         "text": text,
         "labels": ",".join(labels),
         "use_case": use_case_type
     }
 
-# Generate dataset
 def generate_dataset(total_samples=450):
-    """Generate full dataset"""
+    """Generate dataset with balanced use case distribution"""
     data = []
-    
-    # Distribute examples across use cases
     samples_per_use_case = total_samples // len(templates)
-    
     for use_case_type in templates.keys():
         for _ in range(samples_per_use_case):
             data.append(generate_example(use_case_type))
-    
-    # Generate remaining to reach total_samples
     remaining = total_samples - len(data)
     for _ in range(remaining):
         use_case_type = random.choice(list(templates.keys()))
         data.append(generate_example(use_case_type))
-    
     return pd.DataFrame(data)
 
-
+# Generate main dataset
 print("Generating 450 examples...")
 df = generate_dataset(450)
 
-# Fix ECS (containers) examples and EBS (block storage)
+# ECS and EBS examples
 ecs_examples = [
     {"text": "Deploy a containerized microservices application", "labels": "ECS,VPC,IAM", "use_case": "web_application"},
     {"text": "Run Docker containers for my web application", "labels": "ECS,VPC,IAM,RDS", "use_case": "web_application"},
@@ -175,7 +153,7 @@ ecs_examples = [
     {"text": "Deploy microservices using Docker Compose", "labels": "ECS,VPC,IAM,DynamoDB,S3", "use_case": "web_application"},
     {"text": "Run containerized batch processing jobs", "labels": "ECS,S3,VPC,IAM,SQS", "use_case": "data_processing"},
     {"text": "Host multiple containerized applications", "labels": "ECS,VPC,IAM,RDS,CloudFront", "use_case": "web_application"},
-    {"text": "Build a container-based analytics platform", "labels": "ECS,VPC,IAM,RDS,S3", "use_case": "analytics_platform"},
+    {"text": "Build a container-based analytics platform", "labels": "ECS,VPC,IAM,RDS,S3", "use_case": "web_application"},
 ]
 
 ebs_examples = [
@@ -190,6 +168,8 @@ ebs_examples = [
     {"text": "Add disk volumes to running instances", "labels": "EC2,EBS,VPC,IAM", "use_case": "compute"},
     {"text": "Create persistent storage for EC2 workloads", "labels": "EC2,EBS,VPC,IAM,S3", "use_case": "web_application"},
 ]
+
+import pandas as pd
 
 df_ecs = pd.DataFrame(ecs_examples)
 df_ebs = pd.DataFrame(ebs_examples)
@@ -224,17 +204,16 @@ print(f"✅ Added {len(counter_examples)} counter-examples")
 
 # Shuffle entire dataset
 df = df.sample(frac=1).reset_index(drop=True)
-
-# Save to CSV
-df.to_csv('data/dataset_day2.csv', index=False)
-print(f"✅ Generated {len(df)} examples")
-
-# Optionally, print label distribution for verification
 all_labels_list = []
 for labels_str in df['labels']:
     all_labels_list.extend(labels_str.split(','))
 
 label_counts = Counter(all_labels_list)
-print("\n📊 Label distribution after fixes:")
+
+print("\n📊 Label distribution after data generation:")
 for service, count in label_counts.most_common():
     print(f"{service}: {count}")
+
+# Save to CSV
+df.to_csv('data/dataset_day2.csv', index=False)
+print(f"✅ Generated {len(df)} examples")
