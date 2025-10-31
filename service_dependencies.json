@@ -1,0 +1,77 @@
+{
+  "dependencies": {
+    "EC2": {
+      "requires": ["VPC", "IAM"],
+      "description": "EC2 instances must be in a VPC and need IAM roles"
+    },
+    "RDS": {
+      "requires": ["VPC", "IAM"],
+      "description": "RDS must be in VPC with IAM access"
+    },
+    "Lambda": {
+      "requires": ["IAM"],
+      "optional": ["VPC"],
+      "description": "Lambda needs IAM execution role, optionally in VPC"
+    },
+    "ECS": {
+      "requires": ["VPC", "IAM"],
+      "description": "ECS tasks run in VPC with IAM roles"
+    },
+    "DynamoDB": {
+      "requires": ["IAM"],
+      "description": "DynamoDB requires IAM for access control"
+    },
+    "S3": {
+      "requires": ["IAM"],
+      "description": "S3 buckets need IAM policies"
+    },
+    "API_Gateway": {
+      "requires": ["IAM"],
+      "connects_to": ["Lambda", "EC2"],
+      "description": "API Gateway routes to backend services"
+    },
+    "CloudFront": {
+      "requires": ["IAM"],
+      "connects_to": ["S3", "API_Gateway", "EC2"],
+      "description": "CloudFront distributes content from origins"
+    },
+    "Cognito": {
+      "requires": ["IAM"],
+      "description": "Cognito manages user authentication"
+    },
+    "SNS": {
+      "requires": ["IAM"],
+      "description": "SNS sends notifications"
+    },
+    "SQS": {
+      "requires": ["IAM"],
+      "description": "SQS message queue"
+    },
+    "EBS": {
+      "requires": ["EC2", "IAM"],
+      "description": "EBS volumes attach to EC2 instances"
+    },
+    "VPC": {
+      "requires": ["IAM"],
+      "description": "VPC is networking foundation"
+    },
+    "IAM": {
+      "requires": [],
+      "description": "IAM is foundational for all services"
+    }
+  },
+  "conflicts": {
+    "Lambda_vs_EC2": {
+      "services": ["Lambda", "EC2"],
+      "context": "For similar compute tasks",
+      "rule": "Choose one based on serverless vs traditional hosting"
+    }
+  },
+  "typical_combinations": {
+    "serverless_api": ["Lambda", "API_Gateway", "DynamoDB", "IAM"],
+    "web_application": ["EC2", "VPC", "RDS", "S3", "CloudFront", "IAM"],
+    "static_website": ["S3", "CloudFront", "IAM"],
+    "containerized_app": ["ECS", "VPC", "RDS", "IAM"],
+    "mobile_backend": ["Lambda", "API_Gateway", "DynamoDB", "Cognito", "SNS", "IAM"]
+  }
+}
