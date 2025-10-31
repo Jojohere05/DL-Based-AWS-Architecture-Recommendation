@@ -57,6 +57,7 @@
       "keywords": ["user login", "sign up", "user authentication", "user management"]
     }
   },
+  
   "messaging": {
     "SNS": {
       "description": "Notification service",

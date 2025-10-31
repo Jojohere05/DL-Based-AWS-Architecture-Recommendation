@@ -12,9 +12,10 @@ class PositionalEncoding(nn.Module):
         pe[:, 1::2] = torch.cos(position * div_term)
         pe = pe.unsqueeze(0)
         self.register_buffer('pe', pe)
-    
+
     def forward(self, x):
         return x + self.pe[:, :x.size(1)]
+
 
 class TransformerServiceClassifier(nn.Module):
     def __init__(self, input_dim=384, hidden_dim=256, num_heads=4, num_layers=2, output_dim=15, dropout=0.3):
@@ -83,3 +84,4 @@ if __name__ == "__main__":
     print(f"Output shape: {output.shape}")
     print(f"Total parameters: {sum(p.numel() for p in model.parameters()):,}")
     print("✅ Model created successfully")
+    

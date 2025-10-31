@@ -1,9 +1,0 @@
-{
-  "EC2": ["VPC", "IAM"],
-  "RDS": ["VPC", "IAM"],
-  "Lambda": ["IAM"],
-  "ECS": ["VPC", "IAM"],
-  "DynamoDB": ["IAM"],
-  "API_Gateway": ["IAM"],
-  "CloudFront": ["IAM"]
-}
