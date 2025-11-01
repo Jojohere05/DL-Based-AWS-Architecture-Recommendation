@@ -1,0 +1,34 @@
+Example document for an EdTech platform:
+
+Project Name: EduVision — Online Coaching for Entrance Exams
+Prepared for: Founders & Tech Team
+Date: September 2025
+
+----------------------------------------------------------
+1. Overview
+
+EduVision is an EdTech startup aimed at providing live interactive classes and recorded lectures for students preparing for national-level entrance exams. The platform will host thousands of students simultaneously, especially during peak admission months.
+
+We aim to deliver seamless learning experiences through video streaming, AI-driven personalized course recommendations, and secure student data management.
+
+Expected Scale:
+  • Daily active users: ~50,000
+  • Peak concurrency: ~3,000 users at the same time
+  • Storage needs: ~20 TB (primarily lecture videos and transcripts)
+  • Monthly infra budget: ~$8,000
+
+----------------------------------------------------------
+3. Non-Functional Requirements
+
+• Performance: API response latency should remain under 150 ms for quizzes and interactions. Video startup latency should be <300 ms globally.
+• Availability: 99.9% uptime, especially during live classes.
+• Integration: Event-driven processing for handling lecture uploads, automatic transcript generation, and indexing.
+• Messaging: Asynchronous communication required for scheduling tasks, notifications, and event pipelines.
+
+----------------------------------------------------------
+4. Data & AI Needs
+
+• Lecture videos (~20 TB) stored with long-term archival of past years’ content.
+• NLP pipeline required to process lecture transcripts and index them for search.
+• Recommender system to suggest personalized content → requires medium-to-large AI model training on student behavior data.
+• Training workloads are compute-intensive and will occasionally require GPU-based infrastructure.

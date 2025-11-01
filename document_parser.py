@@ -1,91 +1,201 @@
 """
-Document Parser - Extracts requirements from complex documents
-Can work with or without LLM
+Document Parser with File Upload Support
+Handles: PDF, Word (.docx), TXT, and direct text input
 """
 
 import re
 import json
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
 
 class RequirementsDocumentParser:
     """Parse complex documents into structured requirements"""
     
-    def __init__(self, api_key=None):
-        self.api_key = api_key
-        if api_key:
-            import anthropic
-            self.client = anthropic.Anthropic(api_key=api_key)
-            self.use_llm = True
-            print("✅ LLM parser enabled (Claude)")
+    def __init__(self, api_key=None, use_gemini=True):
+        self.api_key = api_key or os.getenv('GOOGLE_API_KEY')
+        self.use_gemini = use_gemini and self.api_key
+        
+        if self.use_gemini:
+            try:
+                import google.generativeai as genai
+                genai.configure(api_key=self.api_key)
+                self.model = genai.GenerativeModel('gemini-2.0-flash-exp')
+                self.use_llm = True
+                print("✅ LLM parser enabled (Google Gemini 2.0 Flash Experimental)")
+            except Exception as e:
+                print(f"⚠️  Gemini initialization failed: {e}")
+                self.use_llm = False
         else:
             self.use_llm = False
-            print("⚠️  Using fallback rule-based parser (no API key)")
+            print("⚠️  Using fallback rule-based parser")
     
-    def parse_document(self, document_text):
+    def parse_from_file(self, file_path):
         """
-        Parse document and extract key requirements
+        Parse document from uploaded file
+        
+        Args:
+            file_path: Path to uploaded file (.txt, .pdf, .docx)
         
         Returns:
-            Dict with extracted features
+            Dict with extracted requirements
         """
+        # Extract text from file
+        text = self._extract_text_from_file(file_path)
+        
+        if not text:
+            raise ValueError(f"Could not extract text from {file_path}")
+        
+        # Parse the extracted text
+        return self.parse_document(text)
+    
+    def _extract_text_from_file(self, file_path):
+        """Extract text from different file formats"""
+        file_ext = os.path.splitext(file_path)[1].lower()
+        
+        try:
+            if file_ext == '.txt':
+                return self._extract_from_txt(file_path)
+            elif file_ext == '.pdf':
+                return self._extract_from_pdf(file_path)
+            elif file_ext in ['.docx', '.doc']:
+                return self._extract_from_docx(file_path)
+            else:
+                raise ValueError(f"Unsupported file type: {file_ext}")
+        except Exception as e:
+            print(f"⚠️  File extraction error: {e}")
+            return None
+    
+    def _extract_from_txt(self, file_path):
+        """Extract text from .txt file"""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            return f.read()
+    
+    def _extract_from_pdf(self, file_path):
+        """Extract text from PDF"""
+        try:
+            import PyPDF2
+            
+            text = []
+            with open(file_path, 'rb') as f:
+                pdf_reader = PyPDF2.PdfReader(f)
+                for page in pdf_reader.pages:
+                    text.append(page.extract_text())
+            
+            return '\n'.join(text)
+        except ImportError:
+            print("⚠️  PyPDF2 not installed. Install: pip install PyPDF2")
+            return None
+    
+    def _extract_from_docx(self, file_path):
+        """Extract text from Word document"""
+        try:
+            import docx
+            
+            doc = docx.Document(file_path)
+            text = []
+            for paragraph in doc.paragraphs:
+                text.append(paragraph.text)
+            
+            return '\n'.join(text)
+        except ImportError:
+            print("⚠️  python-docx not installed. Install: pip install python-docx")
+            return None
+    
+    def parse_document(self, document_text):
+        """Parse document text (from file or direct input)"""
         if self.use_llm:
-            return self._parse_with_llm(document_text)
+            return self._parse_with_gemini(document_text)
         else:
             return self._parse_with_rules(document_text)
     
-    def _parse_with_llm(self, doc_text):
-        """Use Claude to parse document"""
+    def _parse_with_gemini(self, doc_text):
+        """Use Google Gemini to parse document"""
         
-        prompt = f"""Analyze this technical requirements document and extract key information.
+        prompt = f"""You are an expert AWS solutions architect analyzing technical requirements.
 
-Document:
+DOCUMENT TO ANALYZE:
 {doc_text}
 
-Extract and return as JSON:
+TASK: Extract key information and return ONLY a valid JSON object (no markdown, no explanation, just pure JSON).
+
+Required JSON structure:
 {{
-  "simple_description": "2-3 sentence summary suitable for AWS architecture recommendation",
+  "simple_description": "2-3 sentence summary describing the application in simple terms suitable for AWS architecture recommendation. Focus on: what the app does, scale, and key technical requirements.",
   "scale_indicators": {{
-    "users": <number or null>,
-    "storage_tb": <number or null>,
-    "concurrency": <number or null>
+    "users": <number of daily active users or null>,
+    "storage_tb": <storage in terabytes or null>,
+    "concurrency": <peak concurrent users or null>
   }},
-  "technical_features": ["list", "of", "features"],
-  "compute_preference": "serverless|traditional|gpu|mixed",
-  "budget_monthly": <number or null>
+  "technical_features": [<array of feature strings from the list below>],
+  "compute_preference": "<one of: serverless, traditional, gpu, or mixed>",
+  "budget_monthly": <monthly budget in USD or null>
 }}
 
-Features to look for: video_streaming, ai_ml, real_time, authentication, file_upload, 
-database, messaging, event_driven, analytics, mobile_backend, static_hosting
+FEATURE LIST to detect (include in technical_features array if found):
+- "video_streaming" - if mentions video, streaming, media delivery
+- "ai_ml" - if mentions AI, ML, recommendations, NLP, predictions
+- "real_time" - if mentions real-time, live, websocket, instant updates
+- "authentication" - if mentions auth, login, user management, SSO
+- "file_upload" - if mentions file uploads, document storage
+- "database" - if mentions database, data storage, persistence
+- "messaging" - if mentions messaging, notifications, email, SMS, push
+- "event_driven" - if mentions events, queues, async processing
+- "analytics" - if mentions analytics, reporting, dashboards, metrics
+- "mobile_backend" - if mentions mobile app, iOS, Android backend
+- "static_hosting" - if mentions static site, HTML/CSS hosting
 
-Be precise and concise."""
+COMPUTE PREFERENCE rules:
+- Use "gpu" if mentions GPU, ML training, heavy compute
+- Use "serverless" if mentions Lambda, serverless, auto-scaling
+- Use "traditional" if mentions EC2, servers, VMs
+- Use "mixed" if mentions combination
 
-        response = self.client.messages.create(
-            model="claude-3-5-sonnet-20241022",
-            max_tokens=1000,
-            messages=[{"role": "user", "content": prompt}]
-        )
-        
-        content = response.content[0].text
-        
-        # Extract JSON from response
-        json_match = re.search(r'\{.*\}', content, re.DOTALL)
-        if json_match:
-            return json.loads(json_match.group())
-        else:
-            # Fallback
+Return ONLY the JSON object, no other text."""
+
+        try:
+            response = self.model.generate_content(
+                prompt,
+                generation_config={
+                    'temperature': 0.1,
+                    'top_p': 0.95,
+                    'top_k': 40,
+                }
+            )
+            
+            content = response.text.strip()
+            content = re.sub(r'^```json\s*', '', content)
+            content = re.sub(r'\s*```$', '', content)
+            content = content.strip()
+            
+            json_match = re.search(r'\{.*\}', content, re.DOTALL)
+            if json_match:
+                parsed = json.loads(json_match.group())
+                print("✅ Gemini successfully parsed document")
+                return parsed
+            else:
+                print("⚠️  No JSON found in Gemini response, using fallback")
+                return self._parse_with_rules(doc_text)
+                
+        except json.JSONDecodeError as e:
+            print(f"⚠️  JSON parsing error: {e}")
+            return self._parse_with_rules(doc_text)
+        except Exception as e:
+            print(f"⚠️  Gemini parsing failed: {e}")
             return self._parse_with_rules(doc_text)
     
     def _parse_with_rules(self, doc_text):
         """Fallback: Rule-based parsing"""
-        
         doc_lower = doc_text.lower()
         
-        # Extract numbers
         users = self._extract_number(doc_text, r'(\d+[,\d]*)\s*(?:daily\s*)?(?:active\s*)?users')
         storage = self._extract_number(doc_text, r'(\d+)\s*tb')
         concurrency = self._extract_number(doc_text, r'(\d+[,\d]*)\s*(?:peak\s*)?concurrency')
         budget = self._extract_number(doc_text, r'\$(\d+[,\d]*)')
         
-        # Detect features
         features = []
         feature_keywords = {
             'video_streaming': ['video', 'streaming', 'lecture', 'media'],
@@ -105,7 +215,6 @@ Be precise and concise."""
             if any(kw in doc_lower for kw in keywords):
                 features.append(feature)
         
-        # Compute preference
         compute_pref = "serverless"
         if 'gpu' in doc_lower or 'training' in doc_lower:
             compute_pref = "gpu"
@@ -114,8 +223,9 @@ Be precise and concise."""
         elif 'serverless' in doc_lower or 'lambda' in doc_lower:
             compute_pref = "serverless"
         
-        # Generate simple description
         simple_desc = self._generate_simple_description(features, users, compute_pref)
+        
+        print("✅ Rule-based parser completed")
         
         return {
             "simple_description": simple_desc,
@@ -142,7 +252,6 @@ Be precise and concise."""
     
     def _generate_simple_description(self, features, users, compute_pref):
         """Generate simple text description from features"""
-        
         parts = ["Build a"]
         
         if compute_pref == "serverless":
@@ -150,7 +259,6 @@ Be precise and concise."""
         elif compute_pref == "gpu":
             parts.append("GPU-accelerated")
         
-        # Primary purpose
         if "video_streaming" in features:
             parts.append("video streaming platform")
         elif "mobile_backend" in features:
@@ -160,7 +268,6 @@ Be precise and concise."""
         else:
             parts.append("web application")
         
-        # Add scale
         if users:
             if users < 10000:
                 parts.append("for small-scale users")
@@ -169,7 +276,6 @@ Be precise and concise."""
             else:
                 parts.append("for large-scale users")
         
-        # Add key features
         feature_mentions = []
         if "authentication" in features:
             feature_mentions.append("user authentication")
@@ -188,8 +294,12 @@ Be precise and concise."""
 
 # Test
 if __name__ == "__main__":
-    parser = RequirementsDocumentParser(api_key=None)
+    parser = RequirementsDocumentParser(use_gemini=True)
     
+    # Test 1: Direct text input
+    print("="*80)
+    print("TEST 1: Direct Text Input")
+    print("="*80)
     test_doc = """
     EduVision - Online learning platform
     - 50,000 daily users
@@ -197,7 +307,15 @@ if __name__ == "__main__":
     - AI-powered recommendations
     - Budget: $5000/month
     """
-    
     result = parser.parse_document(test_doc)
     print(json.dumps(result, indent=2))
-    print("\n✅ Parser working!")
+    
+    # Test 2: File upload (if file exists)
+    print("\n" + "="*80)
+    print("TEST 2: File Upload")
+    print("="*80)
+    try:
+        result = parser.parse_from_file("test_requirements.txt")
+        print(json.dumps(result, indent=2))
+    except Exception as e:
+        print(f"File test skipped: {e}")
