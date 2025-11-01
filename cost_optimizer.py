@@ -1,18 +1,17 @@
 """
-STAGE 2: Cost Optimizer
-Optimizes architecture based on budget constraints
+Enhanced Cost Optimizer using AWS Cost Calculator
 """
 
 import json
+from aws_cost_calculator import AWSCostCalculator  # Import calculator
+
 
 class CostOptimizer:
     """Optimize AWS architecture for budget constraints"""
     
-    def _init_(self):
-        # Load cost data from service_dependencies.json
-        with open('service_dependencies.json', 'r') as f:
-            data = json.load(f)
-            self.service_costs = data.get('service_costs', {})
+    def __init__(self):  # FIXED: __init__
+        # Use AWS cost calculator for accurate pricing
+        self.calculator = AWSCostCalculator()
         
         # Service alternatives for cost optimization
         self.alternatives = {
@@ -35,7 +34,7 @@ class CostOptimizer:
     
     def estimate_cost(self, services, traffic="medium"):
         """
-        Estimate monthly cost for given services
+        Estimate monthly cost using AWS Cost Calculator
         
         Args:
             services: List of service names
@@ -44,22 +43,9 @@ class CostOptimizer:
         Returns:
             Estimated monthly cost in USD
         """
-        traffic_multipliers = {
-            "low": 1,
-            "medium": 3,
-            "high": 10
-        }
-        multiplier = traffic_multipliers.get(traffic, 1)
-        
-        total_cost = 0
-        for service in services:
-            if service in self.service_costs:
-                cost_data = self.service_costs[service]
-                base = cost_data.get("base_monthly", 0)
-                scaling = cost_data.get("scaling_factor", 0)
-                total_cost += base + (scaling * multiplier)
-        
-        return round(total_cost, 2)
+        # Use AWS calculator for accurate costs
+        result = self.calculator.estimate_monthly_cost(services, usage_profile=traffic)
+        return result['total_monthly']
     
     def optimize_for_budget(self, predicted_services, budget_constraint, traffic_estimate="medium"):
         """
@@ -76,19 +62,22 @@ class CostOptimizer:
         budget_limits = {
             "low": 100,
             "medium": 500,
-            "high": 2000,
-            "custom": None  # For custom amounts
+            "high": 2000
         }
         
         target_budget = budget_limits.get(budget_constraint, 500)
         current_cost = self.estimate_cost(predicted_services, traffic_estimate)
         
         if current_cost <= target_budget:
+            # Get detailed breakdown
+            breakdown = self.calculator.estimate_monthly_cost(predicted_services, traffic_estimate)
+            
             return {
                 "status": "within_budget",
                 "current_cost": current_cost,
                 "target_budget": target_budget,
                 "services": predicted_services,
+                "breakdown": breakdown['breakdown'],
                 "changes_made": [],
                 "message": f"✅ Architecture fits within ${target_budget}/month budget"
             }
@@ -107,15 +96,19 @@ class CostOptimizer:
         new_cost = self.estimate_cost(optimized_services, traffic_estimate)
         changes = self._get_changes(predicted_services, optimized_services)
         
+        # Get detailed breakdown
+        breakdown = self.calculator.estimate_monthly_cost(optimized_services, traffic_estimate)
+        
         return {
             "status": "optimized" if new_cost <= target_budget else "partial_optimization",
             "original_cost": current_cost,
             "optimized_cost": new_cost,
             "target_budget": target_budget,
-            "savings": current_cost - new_cost,
+            "savings": round(current_cost - new_cost, 2),
             "savings_percentage": round(((current_cost - new_cost) / current_cost) * 100, 1),
             "original_services": predicted_services,
             "optimized_services": optimized_services,
+            "breakdown": breakdown['breakdown'],
             "changes_made": changes,
             "message": self._get_message(new_cost, target_budget, current_cost)
         }
@@ -123,7 +116,7 @@ class CostOptimizer:
     def _apply_optimizations(self, services, current_cost, target_budget, traffic):
         """Apply cost reduction strategies"""
         
-        # Strategy 1: Replace expensive compute with serverless (saves 60-80%)
+        # Strategy 1: Replace expensive compute with serverless
         if current_cost > target_budget * 1.3:
             if "EC2" in services:
                 services.remove("EC2")
@@ -133,7 +126,7 @@ class CostOptimizer:
                     services.append("API_Gateway")
                 print("  ✓ Replaced EC2 with Lambda (serverless)")
         
-        # Strategy 2: Use cheaper database (saves 40-60%)
+        # Strategy 2: Use cheaper database
         if self.estimate_cost(services, traffic) > target_budget:
             if "RDS" in services:
                 services.remove("RDS")
@@ -148,37 +141,15 @@ class CostOptimizer:
                 services.remove(svc)
                 print(f"  ✓ Removed optional service: {svc}")
         
-        # Strategy 4: Remove CDN if still over budget (saves $10-50)
+        # Strategy 4: Remove CDN if still over budget
         if self.estimate_cost(services, traffic) > target_budget:
             if "CloudFront" in services:
                 services.remove("CloudFront")
                 print("  ✓ Removed CloudFront (CDN)")
         
-        # Ensure critical dependencies remain
-        services = self._ensure_dependencies(services)
-        
-        return services
-    
-    def _ensure_dependencies(self, services):
-        """Ensure required dependencies are present"""
-        
-        # Load dependency rules
-        with open('service_dependencies.json', 'r') as f:
-            dep_data = json.load(f)
-            dependencies = dep_data.get('dependencies', {})
-        
-        # Add missing dependencies
-        added = []
-        for service in list(services):
-            if service in dependencies:
-                required = dependencies[service].get('requires', [])
-                for req in required:
-                    if req not in services:
-                        services.append(req)
-                        added.append(req)
-        
-        if added:
-            print(f"  ✓ Added required dependencies: {added}")
+        # Ensure IAM is always present
+        if "IAM" not in services:
+            services.append("IAM")
         
         return services
     
@@ -200,7 +171,7 @@ class CostOptimizer:
             })
         
         for svc in added:
-            if svc not in original:  # Not a dependency add
+            if svc not in original:
                 changes.append({
                     "type": "added",
                     "service": svc,
@@ -213,54 +184,23 @@ class CostOptimizer:
         """Generate status message"""
         if new_cost <= target:
             savings = original - new_cost
-            return f"✅ Optimized to ${new_cost}/month (saved ${savings}, {round((savings/original)*100)}%)"
+            return f"✅ Optimized to ${new_cost}/month (saved ${round(savings, 2)}, {round((savings/original)*100)}%)"
         else:
-            return f"⚠  Partially optimized to ${new_cost}/month (still ${new_cost - target} over budget)"
-    
-    def get_cost_breakdown(self, services, traffic="medium"):
-        """Get detailed cost breakdown per service"""
-        breakdown = []
-        
-        for service in services:
-            if service in self.service_costs:
-                cost_data = self.service_costs[service]
-                traffic_mult = {"low": 1, "medium": 3, "high": 10}.get(traffic, 1)
-                
-                base = cost_data.get("base_monthly", 0)
-                scaling = cost_data.get("scaling_factor", 0)
-                total = base + (scaling * traffic_mult)
-                
-                breakdown.append({
-                    "service": service,
-                    "base_cost": base,
-                    "variable_cost": scaling * traffic_mult,
-                    "total_monthly": total,
-                    "tier": cost_data.get("tier", "unknown"),
-                    "unit": cost_data.get("unit", "N/A")
-                })
-        
-        # Sort by cost (highest first)
-        breakdown.sort(key=lambda x: x['total_monthly'], reverse=True)
-        
-        return breakdown
+            return f"⚠️  Partially optimized to ${new_cost}/month (still ${round(new_cost - target, 2)} over budget)"
 
 
 # Test
-if __name__ == "_main_":
+if __name__ == "__main__":  # FIXED
     optimizer = CostOptimizer()
     
     print("="*80)
-    print("TESTING COST OPTIMIZER")
+    print("TESTING ENHANCED COST OPTIMIZER")
     print("="*80)
     
-    # Test case 1: High-cost architecture
     expensive_services = ["EC2", "RDS", "ECS", "S3", "CloudFront", "VPC", "IAM"]
     
     print("\n📊 TEST 1: Expensive Architecture")
     print(f"Services: {expensive_services}")
-    
-    current = optimizer.estimate_cost(expensive_services, "medium")
-    print(f"Current cost: ${current}/month")
     
     result = optimizer.optimize_for_budget(expensive_services, "low", "medium")
     
@@ -270,28 +210,6 @@ if __name__ == "_main_":
     print(f"Savings: ${result['savings']} ({result['savings_percentage']}%)")
     print(f"\nOptimized services: {result['optimized_services']}")
     
-    if result['changes_made']:
-        print("\n🔄 Changes made:")
-        for change in result['changes_made']:
-            if change['type'] == 'removed':
-                print(f"  ❌ {change['service']}: {change['reason']}")
-                if change['alternative']:
-                    print(f"     → Replaced with: {change['alternative']}")
-    
-    # Test case 2: Cost breakdown
-    print("\n" + "="*80)
-    print("📊 TEST 2: Cost Breakdown")
-    print("="*80)
-    
-    breakdown = optimizer.get_cost_breakdown(result['optimized_services'], "medium")
-    
-    print(f"\n{'Service':<15} {'Monthly Cost':<15} {'Tier':<10} {'Unit'}")
-    print("-" * 60)
-    for item in breakdown:
-        print(f"{item['service']:<15} ${item['total_monthly']:<14.2f} {item['tier']:<10} {item['unit']}")
-    
-    total = sum(item['total_monthly'] for item in breakdown)
-    print("-" * 60)
-    print(f"{'TOTAL':<15} ${total:<14.2f}")
-    
-    print("\n✅ Cost optimizer working correctly!")
+    print("\n💰 Cost Breakdown:")
+    for item in result['breakdown'][:5]:
+        print(f"  {item['service']:15s} ${item['monthly_cost']:>8.2f}/month")

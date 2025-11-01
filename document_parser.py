@@ -43,13 +43,11 @@ class RequirementsDocumentParser:
         Returns:
             Dict with extracted requirements
         """
-        # Extract text from file
         text = self._extract_text_from_file(file_path)
         
         if not text:
             raise ValueError(f"Could not extract text from {file_path}")
         
-        # Parse the extracted text
         return self.parse_document(text)
     
     def _extract_text_from_file(self, file_path):
@@ -290,32 +288,3 @@ Return ONLY the JSON object, no other text."""
             parts.append("with " + ", ".join(feature_mentions[:3]))
         
         return " ".join(parts) + "."
-
-
-# Test
-if __name__ == "__main__":
-    parser = RequirementsDocumentParser(use_gemini=True)
-    
-    # Test 1: Direct text input
-    print("="*80)
-    print("TEST 1: Direct Text Input")
-    print("="*80)
-    test_doc = """
-    EduVision - Online learning platform
-    - 50,000 daily users
-    - Video streaming for lectures
-    - AI-powered recommendations
-    - Budget: $5000/month
-    """
-    result = parser.parse_document(test_doc)
-    print(json.dumps(result, indent=2))
-    
-    # Test 2: File upload (if file exists)
-    print("\n" + "="*80)
-    print("TEST 2: File Upload")
-    print("="*80)
-    try:
-        result = parser.parse_from_file("test_requirements.txt")
-        print(json.dumps(result, indent=2))
-    except Exception as e:
-        print(f"File test skipped: {e}")

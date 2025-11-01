@@ -1,200 +1,259 @@
 """
-LLM Enhancement Layer (Optional)
-Converts model output → Actionable solution
+LLM Enhancement Layer
+Converts transformer output → User-friendly explanations matching frontend
 """
 
-import anthropic
+import google.generativeai as genai
 import json
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
 
 class LLMEnhancer:
-    """Use LLM to generate deployment guides, Terraform, etc."""
+    """Use Gemini to generate explainability content for frontend"""
     
-    def _init_(self, api_key):
-        if api_key:
-            self.client = anthropic.Anthropic(api_key=api_key)
-            self.enabled = True
+    def __init__(self, api_key=None):
+        self.api_key = api_key or os.getenv('GOOGLE_API_KEY')
+        
+        if self.api_key:
+            try:
+                genai.configure(api_key=self.api_key)
+                self.model = genai.GenerativeModel('gemini-2.0-flash-exp')
+                self.enabled = True
+                print("✅ LLM enhancer enabled (Gemini)")
+            except Exception as e:
+                print(f"⚠️  Gemini initialization failed: {e}")
+                self.enabled = False
         else:
             self.enabled = False
-            print("⚠  LLM enhancer disabled (no API key)")
+            print("⚠️  LLM enhancer disabled (no API key)")
     
     def enhance(self, pipeline_result):
         """
-        Enhance pipeline output with LLM-generated content
+        Enhance pipeline output with explanations
         
         Args:
-            pipeline_result: Output from CompletePipeline
+            pipeline_result: Output from CompletePipeline with predicted services
         
         Returns:
-            Enhanced result with deployment guide, Terraform, etc.
+            Enhanced result matching frontend "Explainability" format
         """
         if not self.enabled:
-            return self._generate_template_output(pipeline_result)
+            return self._generate_template_explanations(pipeline_result)
         
         try:
-            return self._llm_enhance(pipeline_result)
+            return self._gemini_enhance(pipeline_result)
         except Exception as e:
-            print(f"⚠  LLM enhancement failed: {e}")
-            return self._generate_template_output(pipeline_result)
+            print(f"⚠️  LLM enhancement failed: {e}")
+            return self._generate_template_explanations(pipeline_result)
     
-    def _llm_enhance(self, result):
-        """Use Claude to generate actionable output"""
+    def _gemini_enhance(self, result):
+        """Use Gemini to generate service explanations"""
         
-        services = [s['service'] for s in result['final_architecture']['predicted_services']]
-        requirements = result['document_analysis']['simple_description']
+        services = result['predicted_services']
+        requirements = result.get('document_analysis', {}).get('simple_description', '')
         
-        prompt = f"""You are an AWS solutions architect. Generate a complete deployment solution.
-
-REQUIREMENTS:
-{requirements}
-
-PREDICTED SERVICES (by ML model with 90% accuracy):
-{', '.join(services)}
-
-BUDGET: ${result['metadata']['estimated_monthly_cost']}/month
-
-Generate:
-
-1. *EXECUTIVE SUMMARY* (2-3 sentences)
-
-2. *ARCHITECTURE OVERVIEW* (explain how services work together)
-
-3. *DEPLOYMENT STEPS* (step-by-step CLI commands)
-
-4. *TERRAFORM CODE* (production-ready, with variables)
-
-5. *SECURITY CHECKLIST* (specific to these services)
-
-6. *COST BREAKDOWN* (realistic monthly estimates per service)
-
-7. *MONITORING SETUP* (CloudWatch alarms and metrics)
-
-Be specific and actionable. Include actual commands and code."""
-
-        response = self.client.messages.create(
-            model="claude-3-5-sonnet-20241022",
-            max_tokens=4000,
-            messages=[{"role": "user", "content": prompt}]
-        )
+        # Generate explanations for each service
+        service_explanations = []
         
-        content = response.content[0].text
+        for service_info in services:
+            service = service_info['service']
+            confidence = service_info['confidence']
+            
+            prompt = f"""You are an AWS solutions architect explaining service selection.
+
+
+USER REQUIREMENT: {requirements}
+
+
+SELECTED SERVICE: {service}
+CONFIDENCE: {confidence:.0%}
+
+
+Generate a brief explanation (2-3 sentences) explaining:
+1. WHY this service was selected based on the requirements
+2. What specific features make it suitable
+
+Format: Direct explanation without headers or bullet points.
+Tone: Professional but conversational."""
+
+            try:
+                response = self.model.generate_content(
+                    prompt,
+                    generation_config={
+                        'temperature': 0.3,
+                        'max_output_tokens': 200
+                    }
+                )
+                
+                explanation = response.text.strip()
+                
+            except Exception as e:
+                explanation = self._get_fallback_explanation(service, requirements)
+            
+            service_explanations.append({
+                "service": service,
+                "confidence": confidence,
+                "category": service_info.get('category', 'other'),
+                "description": service_info.get('description', ''),
+                "explanation": explanation,
+                "reasoning": self._extract_keywords(requirements, service)
+            })
         
         return {
             **result,
-            "llm_enhanced_output": {
-                "full_text": content,
-                "sections": self._parse_sections(content)
+            "explainability": {
+                "service_explanations": service_explanations,
+                "architecture_rationale": self._generate_architecture_rationale(result, requirements)
             }
         }
     
-    def _parse_sections(self, text):
-        """Parse LLM output into sections"""
-        sections = {}
-        current_section = None
-        current_content = []
+    def _generate_architecture_rationale(self, result, requirements):
+        """Generate overall architecture explanation"""
         
-        for line in text.split('\n'):
-            if line.startswith('') and line.endswith(''):
-                if current_section:
-                    sections[current_section] = '\n'.join(current_content)
-                current_section = line.strip('*').strip()
-                current_content = []
-            else:
-                current_content.append(line)
+        services = [s['service'] for s in result['predicted_services']]
+        cost = result['metadata']['estimated_monthly_cost']
         
-        if current_section:
-            sections[current_section] = '\n'.join(current_content)
-        
-        return sections
+        prompt = f"""Explain the overall architecture design in 3-4 sentences.
+
+
+REQUIREMENTS: {requirements}
+
+
+SERVICES: {', '.join(services)}
+ESTIMATED COST: ${cost}/month
+
+
+Explain:
+1. How these services work together
+2. Why this architecture fits the requirements
+3. Key architectural benefits
+
+Format: Natural paragraph, no headers."""
+
+        try:
+            response = self.model.generate_content(
+                prompt,
+                generation_config={'temperature': 0.3, 'max_output_tokens': 300}
+            )
+            return response.text.strip()
+        except:
+            return f"This architecture uses {len(services)} AWS services optimized for your requirements, with an estimated cost of ${cost}/month. The services are selected based on scalability, reliability, and cost-effectiveness."
     
-    def _generate_template_output(self, result):
-        """Fallback: Generate template-based output"""
+    def _extract_keywords(self, requirements, service):
+        """Extract relevant keywords from requirements for this service"""
+        keywords = []
         
-        services = [s['service'] for s in result['final_architecture']['predicted_services']]
+        req_lower = requirements.lower()
         
-        template = f"""
-# AWS Architecture Deployment Guide
-
-## Executive Summary
-This architecture uses {len(services)} AWS services optimized for your requirements.
-Estimated cost: ${result['metadata']['estimated_monthly_cost']}/month
-
-## Services
-{', '.join(services)}
-
-## Quick Start
-
-### 1. Set up AWS CLI
-bash
-aws configure
-
-
-### 2. Deploy core infrastructure
-bash
-# Create VPC (if needed)
-aws ec2 create-vpc --cidr-block 10.0.0.0/16
-
-# Deploy services (use Terraform for production)
-terraform init
-terraform plan
-terraform apply
-
-
-### 3. Configure services
-- Set up IAM roles and policies
-- Configure security groups
-- Enable CloudWatch monitoring
-
-## Terraform Template
-hcl
-terraform {{
-  required_version = ">= 1.0"
-}}
-
-provider "aws" {{
-  region = "us-east-1"
-}}
-
-# Add resources for: {', '.join(services)}
-
-
-## Cost Breakdown
-Total estimated: ${result['metadata']['estimated_monthly_cost']}/month
-
-## Next Steps
-1. Review security settings
-2. Set up monitoring and alerts
-3. Configure backup and disaster recovery
-4. Run load testing
-"""
+        # Service-specific keyword mapping
+        keyword_map = {
+            "S3": ["storage", "file", "image", "video", "photo", "media"],
+            "Lambda": ["serverless", "function", "event", "trigger"],
+            "DynamoDB": ["database", "NoSQL", "fast", "scalable"],
+            "RDS": ["database", "SQL", "relational", "MySQL", "PostgreSQL"],
+            "EC2": ["server", "compute", "VM", "instance"],
+            "CloudFront": ["CDN", "distribution", "cache", "fast", "global"],
+            "API_Gateway": ["API", "REST", "endpoint", "HTTP"],
+            "Cognito": ["authentication", "user", "login", "signup"],
+            "SNS": ["notification", "message", "alert", "push"],
+            "SQS": ["queue", "async", "message"],
+            "ECS": ["container", "docker", "microservices"],
+            "VPC": ["network", "private", "security"],
+            "IAM": ["permission", "access", "security", "role"]
+        }
+        
+        for keyword in keyword_map.get(service, []):
+            if keyword in req_lower:
+                keywords.append(keyword)
+        
+        return keywords
+    
+    def _get_fallback_explanation(self, service, requirements):
+        """Fallback explanations when Gemini fails"""
+        
+        explanations = {
+            "S3": "Selected for scalable object storage with high durability and low cost for storing files, images, and media assets.",
+            "Lambda": "Chosen for serverless compute to run code without managing servers, automatically scaling based on demand.",
+            "DynamoDB": "Selected for fast, scalable NoSQL database with single-digit millisecond response times and automatic scaling.",
+            "RDS": "Chosen for managed relational database with automated backups, patches, and high availability.",
+            "EC2": "Selected for flexible virtual servers with full control over computing resources and configuration.",
+            "CloudFront": "Chosen for global content delivery network (CDN) to reduce latency and improve user experience worldwide.",
+            "API_Gateway": "Selected for creating, deploying, and managing RESTful APIs with built-in security and throttling.",
+            "Cognito": "Chosen for secure user authentication and authorization with support for social identity providers.",
+            "SNS": "Selected for pub/sub messaging and push notifications to mobile and distributed systems.",
+            "SQS": "Chosen for managed message queuing to decouple and scale microservices and serverless applications.",
+            "ECS": "Selected for container orchestration to run Docker containers with automatic scaling and load balancing.",
+            "VPC": "Chosen for isolated network environment with full control over IP addressing and security settings.",
+            "IAM": "Selected for managing access permissions and policies across all AWS services securely."
+        }
+        
+        return explanations.get(service, f"Selected for its capabilities relevant to your requirements.")
+    
+    def _generate_template_explanations(self, result):
+        """Template-based explanations when Gemini is disabled"""
+        
+        service_explanations = []
+        
+        for service_info in result['predicted_services']:
+            service = service_info['service']
+            
+            service_explanations.append({
+                "service": service,
+                "confidence": service_info['confidence'],
+                "category": service_info.get('category', 'other'),
+                "description": service_info.get('description', ''),
+                "explanation": self._get_fallback_explanation(service, ""),
+                "reasoning": []
+            })
         
         return {
             **result,
-            "deployment_guide": template
+            "explainability": {
+                "service_explanations": service_explanations,
+                "architecture_rationale": "This architecture is optimized based on your requirements and industry best practices."
+            }
         }
 
 
 # Test
-if _name_ == "_main_":
-    # Mock result for testing
+if __name__ == "__main__":
+    # Mock result matching your pipeline output
     mock_result = {
-        "final_architecture": {
-            "predicted_services": [
-                {"service": "Lambda", "confidence": 0.95},
-                {"service": "DynamoDB", "confidence": 0.92},
-                {"service": "S3", "confidence": 0.90}
-            ]
-        },
+        "predicted_services": [
+            {"service": "S3", "confidence": 0.95, "category": "storage", "description": "Object storage"},
+            {"service": "Cognito", "confidence": 0.94, "category": "security", "description": "User authentication"},
+            {"service": "Lambda", "confidence": 0.87, "category": "compute", "description": "Serverless functions"}
+        ],
         "document_analysis": {
-            "simple_description": "Build serverless API for mobile app"
+            "simple_description": "Build a web application for my med AI startup with photo-sharing and image storage features"
         },
         "metadata": {
-            "estimated_monthly_cost": 150
+            "estimated_monthly_cost": 234
         }
     }
     
-    enhancer = LLMEnhancer(api_key=None)  # No API key = template mode
+    enhancer = LLMEnhancer()  # Will use GOOGLE_API_KEY from .env
     enhanced = enhancer.enhance(mock_result)
     
-    print("✅ LLM Enhancer working!")
-    if "deployment_guide" in enhanced:
-        print("\n" + enhanced["deployment_guide"][:500] + "...")
+    print("="*80)
+    print("SERVICE EXPLANATIONS (Frontend Format)")
+    print("="*80)
+    
+    for svc in enhanced['explainability']['service_explanations']:
+        print(f"\n{svc['service']} ({svc['category'].upper()})")
+        print(f"Confidence: {svc['confidence']:.0%}")
+        print(f"\nWe selected this because:")
+        print(f"• {svc['explanation']}")
+        if svc['reasoning']:
+            print(f"\nMatched keywords: {', '.join(svc['reasoning'])}")
+    
+    print("\n" + "="*80)
+    print("ARCHITECTURE RATIONALE")
+    print("="*80)
+    print(enhanced['explainability']['architecture_rationale'])
+    
+    print("\n✅ LLM Enhancer working!")
